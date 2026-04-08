@@ -105,6 +105,7 @@ function createLogEntry(level, args) {
   
   const message = args.map((arg) => {
     if (arg === undefined) return "undefined";
+    if (arg === null) return "null";
     if (typeof arg === "string") return arg;
     if (arg instanceof Error || typeof arg.stack === "string") {
       let stringifiedError = arg.toString();
@@ -119,7 +120,7 @@ function createLogEntry(level, args) {
       }
       return stringifiedError;
     }
-    if (typeof arg === "object" && arg !== null) {
+    if (typeof arg === "object") {
       try {
         extra.push(JSON.parse(JSON.stringify(arg)));
       } catch {
